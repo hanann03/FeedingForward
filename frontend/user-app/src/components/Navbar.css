@@ -1,77 +1,107 @@
-/* Resetting some styles */
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: 'Roboto', sans-serif;
-    background-color: #f9f9f9;
-    color: #333;
-  }
-  
-  .navbar {
-    display: flex;
-    justify-content: flex-start;  /* Align contents to the left */
-    align-items: center;
-    background-color: #003366; /* Navy Blue */
-    padding: 1rem 2rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    position: fixed;
-    width: 100%;
-    top: 0;
-    z-index: 100;
-  }
-  
-  .navbar .logo h1 {
-    font-size: 2rem;
-    color: white;
-    font-weight: 700;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #f9f9f9;
+  color: #333;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 1rem; /* Space between logo and text */
+}
+
+.logo-image {
+  width: 50px; /* Adjust the size as needed */
+  height: auto;
+  border-radius: 5px; /* Optional: smooth edges */
+}
+
+
+.navbar {
+  display: flex;
+  justify-content: space-between; /* Space between logo and links */
+  align-items: center;
+  background-color: #003366; /* Teal */
+  padding: 1rem 2rem;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar .logo h1 {
+  font-size: 2rem;
+  color: white;
+  font-weight: 700;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.nav-links a {
+  text-decoration: none;
+  color: white;
+  font-size: 1.1rem;
+  font-weight: 500;
+  text-transform: uppercase; /* Make links uppercase */
+  transition: color 0.3s ease, transform 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: #ffcc00; /* Yellow on hover */
+  transform: scale(1.05);
+}
+
+.nav-links a.active {
+  color: #ffcc00; /* Highlight for active link */
+  border-bottom: 2px solid #ffcc00; /* Add underline to active link */
+}
+
+.donate-button {
+  background-color: #ffcc00; /* Yellow background */
+  color: #003333; /* Text color matches teal */
+  font-size: 1rem;
+  font-weight: 600;
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  text-transform: uppercase;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
   }
-  
+
   .nav-links {
-    display: flex;
-    gap: 2rem;
-    list-style: none;
-    margin-left: 3rem;  /* Add space between logo and navigation links */
+    flex-direction: column;
+    width: 100%;
+    margin-top: 1rem;
   }
-  
+
   .nav-links a {
-    text-decoration: none;
-    color: white;
-    font-size: 1.1rem;
-    font-weight: 500;
-    transition: color 0.3s ease, transform 0.3s ease;
+    padding: 1rem;
+    width: 100%;
+    text-align: left;
   }
-  
-  .nav-links a:hover {
-    color: #ffcc00; /* Yellow on hover */
-    transform: scale(1.05);
+
+  .navbar .logo {
+    margin-bottom: 1rem;
   }
-  
-  /* Mobile Responsiveness */
-  @media (max-width: 768px) {
-    .navbar {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-  
-    .nav-links {
-      flex-direction: column;
-      width: 100%;
-      margin-top: 1rem;
-    }
-  
-    .nav-links a {
-      padding: 1rem;
-      width: 100%;
-      text-align: left;
-    }
-  
-    .navbar .logo {
-      margin-bottom: 1rem;
-    }
-  }
-  
+}
