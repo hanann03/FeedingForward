@@ -1,0 +1,77 @@
+/* Resetting some styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f9f9f9;
+    color: #333;
+  }
+  
+  .navbar {
+    display: flex;
+    justify-content: flex-start;  /* Align contents to the left */
+    align-items: center;
+    background-color: #003366; /* Navy Blue */
+    padding: 1rem 2rem;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 100;
+  }
+  
+  .navbar .logo h1 {
+    font-size: 2rem;
+    color: white;
+    font-weight: 700;
+
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    margin-left: 3rem;  /* Add space between logo and navigation links */
+  }
+  
+  .nav-links a {
+    text-decoration: none;
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 500;
+    transition: color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .nav-links a:hover {
+    color: #ffcc00; /* Yellow on hover */
+    transform: scale(1.05);
+  }
+  
+  /* Mobile Responsiveness */
+  @media (max-width: 768px) {
+    .navbar {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .nav-links {
+      flex-direction: column;
+      width: 100%;
+      margin-top: 1rem;
+    }
+  
+    .nav-links a {
+      padding: 1rem;
+      width: 100%;
+      text-align: left;
+    }
+  
+    .navbar .logo {
+      margin-bottom: 1rem;
+    }
+  }
+  
