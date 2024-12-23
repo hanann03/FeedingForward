@@ -2,130 +2,137 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
 import '../pages/order.css'; // Ensure the CSS file exists or remove if unnecessary
 
-const OrderForm = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phoneNumber: '',
-    location: '',
-    numberOfMeals: ''
+const CustomOrderForm = () => {
+  const [orderData, setOrderData] = useState({
+    fullName: '',
+    userEmail: '',
+    contactNumber: '',
+    deliveryAddress: '',
+    mealQuantity: ''
   });
 
-  const [responseMessage, setResponseMessage] = useState('');
-  const [error, setError] = useState('');
+  const [serverMessage, setServerMessage] = useState('');
+  const [formError, setFormError] = useState('');
   const navigate = useNavigate(); // Initialize useNavigate hook
 
-  const handleChange = (e) => {
+  const handleInputChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prevData => ({
+
+    // If the field is contactNumber, ensure only digits are entered
+    if (name === 'contactNumber' && isNaN(value)) {
+      return; // Prevent non-numeric input
+    }
+
+    setOrderData(prevData => ({
       ...prevData,
       [name]: value
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleFormSubmit = (e) => {
     e.preventDefault();
 
     // Check if all required fields are filled
-    if (!formData.name || !formData.email || !formData.phoneNumber || !formData.location || !formData.numberOfMeals) {
-      setError('Please fill in all fields.');
+    if (!orderData.fullName || !orderData.userEmail || !orderData.contactNumber || !orderData.deliveryAddress || !orderData.mealQuantity) {
+      setFormError('Please fill in all fields.');
       return;
     }
 
     // Create query params from form data
     const queryParams = new URLSearchParams({
-      name: formData.name,
-      email: formData.email,
-      phoneNumber: formData.phoneNumber,
-      location: formData.location,
-      numberOfMeals: formData.numberOfMeals
+      fullName: orderData.fullName,
+      userEmail: orderData.userEmail,
+      contactNumber: orderData.contactNumber,
+      deliveryAddress: orderData.deliveryAddress,
+      mealQuantity: orderData.mealQuantity
     });
 
     // Redirect to the confirmation page with query params
     navigate(`/order/confirmation?${queryParams.toString()}`);
-    setResponseMessage('Order successfully submitted!');
+    setServerMessage('Order successfully submitted!');
   };
 
   return (
-    <div className="form-container">
+    <div className="custom-form-container">
       <h2>Order Form</h2>
-      <form onSubmit={handleSubmit}>
-        <div className="form-group">
-          <label htmlFor="name">Name:</label>
+      <form onSubmit={handleFormSubmit}>
+        <div className="input-group">
+          <label htmlFor="fullName">Full Name:</label>
           <input
             type="text"
-            id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
-            aria-label="Enter your name"
+            id="fullName"
+            name="fullName"
+            value={orderData.fullName}
+            onChange={handleInputChange}
+            aria-label="Enter your full name"
             required
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="email">Email:</label>
+        <div className="input-group">
+          <label htmlFor="userEmail">Email Address:</label>
           <input
             type="email"
-            id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
-            aria-label="Enter your email"
+            id="userEmail"
+            name="userEmail"
+            value={orderData.userEmail}
+            onChange={handleInputChange}
+            aria-label="Enter your email address"
             required
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="phone">Phone Number:</label>
+        <div className="input-group">
+          <label htmlFor="contactNumber">Contact Number:</label>
           <input
             type="tel"
-            id="phone"
-            name="phoneNumber"
-            value={formData.phoneNumber}
-            onChange={handleChange}
-            aria-label="Enter your phone number"
+            id="contactNumber"
+            name="contactNumber"
+            value={orderData.contactNumber}
+            onChange={handleInputChange}
+            aria-label="Enter your contact number"
             required
+            pattern="[0-9]*" // Ensures only numbers are inputted
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="location">Location:</label>
+        <div className="input-group">
+          <label htmlFor="deliveryAddress">Delivery Address:</label>
           <input
             type="text"
-            id="location"
-            name="location"
-            value={formData.location}
-            onChange={handleChange}
-            aria-label="Enter your location"
+            id="deliveryAddress"
+            name="deliveryAddress"
+            value={orderData.deliveryAddress}
+            onChange={handleInputChange}
+            aria-label="Enter your delivery address"
             required
           />
         </div>
-        <div className="form-group">
-          <label htmlFor="numOfMeals">Number of Meals:</label>
+        <div className="input-group">
+          <label htmlFor="mealQuantity">Number of Meals:</label>
           <input
             type="number"
-            id="numOfMeals"
-            name="numberOfMeals"
-            value={formData.numberOfMeals}
-            onChange={handleChange}
+            id="mealQuantity"
+            name="mealQuantity"
+            value={orderData.mealQuantity}
+            onChange={handleInputChange}
             aria-label="Enter the number of meals"
             required
           />
         </div>
-        <button type="submit" className="submit-button">Submit</button>
+        <button type="submit" className="order-submit-btn">Submit Order</button>
       </form>
 
       {/* Display success or error message */}
-      {responseMessage && (
-        <div className="success">
-          <p>{responseMessage}</p>
+      {serverMessage && (
+        <div className="success-message">
+          <p>{serverMessage}</p>
         </div>
       )}
-      {error && (
-        <div className="error">
-          <p><strong>Error:</strong> {error}</p>
+      {formError && (
+        <div className="error-message">
+          <p><strong>Error:</strong> {formError}</p>
         </div>
       )}
     </div>
   );
 };
 
-export default OrderForm;
+export default CustomOrderForm;
