@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
 import './RegisterForm.css';
 
 const RegisterForm = () => {
@@ -11,6 +12,8 @@ const RegisterForm = () => {
     quantity: ''
   });
 
+  const navigate = useNavigate(); // Initialize useNavigate hook
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData(prevData => ({
@@ -21,8 +24,25 @@ const RegisterForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    alert('Registration Submitted!');
-    // You can add logic to handle form submission, like sending data to an API
+
+    // Check if all required fields are filled
+    if (!formData.name || !formData.email || !formData.phone || !formData.type || !formData.foodType || !formData.quantity) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    // Create query params from form data
+    const queryParams = new URLSearchParams({
+      name: formData.name,
+      email: formData.email,
+      phone: formData.phone,
+      type: formData.type,
+      foodType: formData.foodType,
+      quantity: formData.quantity
+    });
+
+    // Redirect to the confirmation page with query params
+    navigate(`/register/confirmation?${queryParams.toString()}`);
   };
 
   return (
