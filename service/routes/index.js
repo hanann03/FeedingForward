@@ -10,11 +10,11 @@ router.get("/", function (req, res, next) {
 router.post("/order", async function (req, res) {
   try {
     const newOrder = new Order({
-      name: req.body.name,
-      email: req.body.email,
-      phoneNumber: req.body.phoneNumber,
-      numberOfMeals: req.body.numberOfMeals,
-      location: req.body.location,
+      fullName: req.body.fullName,
+      Email: req.body.Email,
+      contactNumber: req.body.contactNumber,
+      mealQuantity: req.body.mealQuantity,
+      Address: req.body.address,
     });
     const savedOrder = await newOrder.save();
     res.status(200).json(savedOrder);
@@ -23,6 +23,28 @@ router.post("/order", async function (req, res) {
     res.status(500).json({ message: err.message });
   }
 });
+
+router.post("/events", async function (req, res){
+  try{
+
+    const newEvent = new Event({
+      name: req.body.name,
+      email: req.body.email,
+      phoneNumber: req.body.phoneNumber,
+      doner:req.body.doner,
+      foodType:req.body.foodType,
+      quantity:req.body.quantity,
+
+    })
+    const savedEvent = await newEvent.save();
+    res.status(200).json(savedEvent);
+
+  }catch(err){
+    console.error("error creating event" , err.message);
+    res.status(500).json({ message:err.message})
+     
+  }
+})
 
 
 module.exports = router;

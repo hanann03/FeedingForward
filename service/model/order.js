@@ -2,26 +2,26 @@ const mongoose = require("mongoose");
 
 const OrderFormSchema = new mongoose.Schema(
   {
-    name: {
+    fullName: {
       type: String,
-      required: [true, "Please enter your name"],
+      require,
     },
     email: {
       type: String,
-      required: [true, "Please enter your email"],
+      require,
     },
-    phoneNumber: {
-      type: Number,
-      required: [true, "Please enter your phone number"],
+    contactNumber: {
+      type: String,
+      require,
     },
-    numberOfMeals: {
-      type: Number,
-      required: [true, "Please enter the number of meals you want"],
+    mealQuantity: {
+      type: String,
+      require,
       default: 0,
     },
-    location: {
+    address: {
       type: mongoose.Schema.Types.Mixed, // Allows both Number and String
-      required: [true, "Please enter your location"],
+      require,
     },
   },
   {

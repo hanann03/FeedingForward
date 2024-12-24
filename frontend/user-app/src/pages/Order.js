@@ -32,10 +32,12 @@ const CustomOrderForm = () => {
 
       if (!response.ok) {
         throw new Error(`Error: ${response.status}`);
+        
       }
 
       const data = await response.json();
       console.log('Data sent successfully!', data);
+
 
       setServerMessage('Your order has been placed successfully!');
       setFormError(''); 

@@ -4,10 +4,17 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var mongoose = require ('mongoose');
+var cors = require('cors');
 
 var indexRouter = require('./routes/index');
 
 var app = express();
+
+app.use(cors({
+  origin: '*', // Replace with the allowed origin
+  methods: ['GET', 'POST'],    // Specify allowed methods
+  allowedHeaders: ['Content-Type', 'Authorization'] // Specify allowed headers
+}));
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
