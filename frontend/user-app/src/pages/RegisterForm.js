@@ -1,62 +1,65 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
 import './RegisterForm.css';
 
 const RegisterForm = () => {
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    type: '',
-    foodType: '',
-    quantity: ''
-  });
+  const [name, setName] = useState('');
+  const [email, setEmail] = useState('');
+  const [phone, setPhone] = useState('');
+  const [type, setType] = useState('');
+  const [foodType, setFoodType] = useState('');
+  const [quantity, setQuantity] = useState('');
+  const [serverMessage, setServerMessage] = useState('');
+  const [formError, setFormError] = useState('');
 
-  const navigate = useNavigate(); // Initialize useNavigate hook
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prevData => ({
-      ...prevData,
-      [name]: value
-    }));
-  };
-
-  const handleSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    // Check if all required fields are filled
-    if (!formData.name || !formData.email || !formData.phone || !formData.type || !formData.foodType || !formData.quantity) {
-      alert("Please fill in all fields.");
-      return;
+    const registerData = {
+      name,
+      email,
+      phone,
+      type,
+      foodType,
+      quantity,
+    };
+
+    try {
+      const response = await fetch('http://localhost:3000/events', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(registerData),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log('Data sent successfully!', data);
+
+      setServerMessage('Registration submitted successfully!');
+      setFormError('');
+    } catch (error) {
+      console.error('Error sending data:', error);
+
+      setServerMessage('');
+      setFormError(error.message);
     }
-
-    // Create query params from form data
-    const queryParams = new URLSearchParams({
-      name: formData.name,
-      email: formData.email,
-      phone: formData.phone,
-      type: formData.type,
-      foodType: formData.foodType,
-      quantity: formData.quantity
-    });
-
-    // Redirect to the confirmation page with query params
-    navigate(`/register/confirmation?${queryParams.toString()}`);
   };
 
   return (
     <div className="form-container">
       <h2>Event Registration Form</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleFormSubmit}>
         <div className="form-group">
           <label htmlFor="name">Name:</label>
           <input
             type="text"
             id="name"
-            name="name"
-            value={formData.name}
-            onChange={handleChange}
+            value={name}
+            onChange={(e) => setName(e.target.value)}
             required
           />
         </div>
@@ -65,9 +68,8 @@ const RegisterForm = () => {
           <input
             type="email"
             id="email"
-            name="email"
-            value={formData.email}
-            onChange={handleChange}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
             required
           />
         </div>
@@ -76,9 +78,8 @@ const RegisterForm = () => {
           <input
             type="tel"
             id="phone"
-            name="phone"
-            value={formData.phone}
-            onChange={handleChange}
+            value={phone}
+            onChange={(e) => setPhone(e.target.value)}
             required
           />
         </div>
@@ -86,9 +87,8 @@ const RegisterForm = () => {
           <label htmlFor="type">Are you a:</label>
           <select
             id="type"
-            name="type"
-            value={formData.type}
-            onChange={handleChange}
+            value={type}
+            onChange={(e) => setType(e.target.value)}
             required
           >
             <option value="">Select One</option>
@@ -102,9 +102,8 @@ const RegisterForm = () => {
           <input
             type="text"
             id="foodType"
-            name="foodType"
-            value={formData.foodType}
-            onChange={handleChange}
+            value={foodType}
+            onChange={(e) => setFoodType(e.target.value)}
             required
           />
         </div>
@@ -113,14 +112,24 @@ const RegisterForm = () => {
           <input
             type="number"
             id="quantity"
-            name="quantity"
-            value={formData.quantity}
-            onChange={handleChange}
+            value={quantity}
+            onChange={(e) => setQuantity(e.target.value)}
             required
           />
         </div>
         <button type="submit" className="submit-button">Submit</button>
       </form>
+
+      {serverMessage && (
+        <div className="success-message">
+          <p>{serverMessage}</p>
+        </div>
+      )}
+      {formError && (
+        <div className="error-message">
+          <p><strong>Error:</strong> {formError}</p>
+        </div>
+      )}
     </div>
   );
 };
