@@ -15,7 +15,7 @@ const Home = () => {
         <div className="overlay-text">
           <h1>END HUNGER!</h1>
           <p>
-            Millions of families in America go hungry every year. Help us provide them with enough to eat.
+            Millions of families in the world go hungry every year. Help us provide them with enough to eat.
           </p>
         </div>
       </div>
