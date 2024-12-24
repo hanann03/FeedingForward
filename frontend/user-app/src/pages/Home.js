@@ -1,17 +1,17 @@
 import React from 'react';
 import './Home.css';
-import FoodDonation from '../pages/video1.mp4'; // Correctly importing the video file
+import FoodDonation from '../pages/video1.mp4'; 
 
 const Home = () => {
   return (
     <div className="home-page">
-      {/* Background Video */}
+      
       <div className="video-container">
         <video autoPlay loop muted className="background-video">
-          <source src={FoodDonation} type="video/mp4" /> {/* Using the imported video */}
+          <source src={FoodDonation} type="video/mp4" /> 
           Your browser does not support the video tag.
         </video>
-        {/* Overlay Text */}
+        
         <div className="overlay-text">
           <h1>END HUNGER!</h1>
           <p>
@@ -20,9 +20,9 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Sections */}
+      
       <div className="sections-container">
-        {/* Row 1 */}
+        
         <div className="row">
           <section className="section mission">
             <h2>Our MISSION</h2>
@@ -42,7 +42,7 @@ const Home = () => {
           </section>
         </div>
 
-        {/* Row 2 */}
+        
         <div className="row">
           <section className="section news">
             <h2>LATEST NEWS</h2>

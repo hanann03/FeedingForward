@@ -32,13 +32,16 @@
   }
   
   .overlay-text h1 {
-    font-size: 3em;
+    font-size: 4em;
     font-weight: bold;
+    color: white;
   }
   
   .overlay-text p {
-    font-size: 1.5em;
+    font-size: 2em;
     margin-top: 10px;
+    color: white;
+    
   }
   
   /* Sections Container */
