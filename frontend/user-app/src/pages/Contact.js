@@ -9,15 +9,15 @@ const Contact = () => {
       <div className="contact-details">
         <div className="detail-item">
           <h2>Phone Number</h2>
-          <p>(123) 456-7890</p>
+          <p>+20 100 123 4567</p>
         </div>
         <div className="detail-item">
           <h2>Email</h2>
-          <p>example@example.com</p>
+          <p>feedingforward@gmail.com</p>
         </div>
         <div className="detail-item">
           <h2>Location</h2>
-          <p>123 Your Street, Your City, Your Country</p>
+          <p>456 Tahrir Street, Downtown, Cairo, Egypt</p>
         </div>
       </div>
     </div>
