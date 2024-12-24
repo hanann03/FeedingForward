@@ -1,55 +1,50 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate for redirection
-import '../pages/order.css'; // Ensure the CSS file exists or remove if unnecessary
+import '../pages/order.css'; 
 
 const CustomOrderForm = () => {
-  const [orderData, setOrderData] = useState({
-    fullName: '',
-    userEmail: '',
-    contactNumber: '',
-    deliveryAddress: '',
-    mealQuantity: ''
-  });
-
+  const [fullName, setFullName] = useState('');
+  const [Email, setEmail] = useState('');
+  const [contactNumber, setContactNumber] = useState('');
+  const [Address, setAddress] = useState('');
+  const [mealQuantity, setMealQuantity] = useState('');
   const [serverMessage, setServerMessage] = useState('');
   const [formError, setFormError] = useState('');
-  const navigate = useNavigate(); // Initialize useNavigate hook
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-
-    // If the field is contactNumber, ensure only digits are entered
-    if (name === 'contactNumber' && isNaN(value)) {
-      return; // Prevent non-numeric input
-    }
-
-    setOrderData(prevData => ({
-      ...prevData,
-      [name]: value
-    }));
-  };
-
-  const handleFormSubmit = (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
+    
+    const orderData = {
+      fullName,
+      Email,
+      contactNumber,
+      Address,
+      mealQuantity,
+    };
 
-    // Check if all required fields are filled
-    if (!orderData.fullName || !orderData.userEmail || !orderData.contactNumber || !orderData.deliveryAddress || !orderData.mealQuantity) {
-      setFormError('Please fill in all fields.');
-      return;
+    try {
+      const response = await fetch('http://localhost:3000/order', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(orderData),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+
+      const data = await response.json();
+      console.log('Data sent successfully!', data);
+
+      setServerMessage('Your order has been placed successfully!');
+      setFormError(''); 
+    } catch (error) {
+      console.error('Error sending data:', error);
+
+      setServerMessage('');
+      setFormError(error.message);
     }
-
-    // Create query params from form data
-    const queryParams = new URLSearchParams({
-      fullName: orderData.fullName,
-      userEmail: orderData.userEmail,
-      contactNumber: orderData.contactNumber,
-      deliveryAddress: orderData.deliveryAddress,
-      mealQuantity: orderData.mealQuantity
-    });
-
-    // Redirect to the confirmation page with query params
-    navigate(`/order/confirmation?${queryParams.toString()}`);
-    setServerMessage('Order successfully submitted!');
   };
 
   return (
@@ -61,9 +56,8 @@ const CustomOrderForm = () => {
           <input
             type="text"
             id="fullName"
-            name="fullName"
-            value={orderData.fullName}
-            onChange={handleInputChange}
+            value={fullName}
+            onChange={(e) => setFullName(e.target.value)}
             aria-label="Enter your full name"
             required
           />
@@ -73,9 +67,8 @@ const CustomOrderForm = () => {
           <input
             type="email"
             id="userEmail"
-            name="userEmail"
-            value={orderData.userEmail}
-            onChange={handleInputChange}
+            value={Email}
+            onChange={(e) => setEmail(e.target.value)}
             aria-label="Enter your email address"
             required
           />
@@ -85,12 +78,11 @@ const CustomOrderForm = () => {
           <input
             type="tel"
             id="contactNumber"
-            name="contactNumber"
-            value={orderData.contactNumber}
-            onChange={handleInputChange}
+            value={contactNumber}
+            onChange={(e) => setContactNumber(e.target.value)}
             aria-label="Enter your contact number"
             required
-            pattern="[0-9]*" // Ensures only numbers are inputted
+            pattern="[0-9]*"
           />
         </div>
         <div className="input-group">
@@ -98,9 +90,8 @@ const CustomOrderForm = () => {
           <input
             type="text"
             id="deliveryAddress"
-            name="deliveryAddress"
-            value={orderData.deliveryAddress}
-            onChange={handleInputChange}
+            value={Address}
+            onChange={(e) => setAddress(e.target.value)}
             aria-label="Enter your delivery address"
             required
           />
@@ -110,9 +101,8 @@ const CustomOrderForm = () => {
           <input
             type="number"
             id="mealQuantity"
-            name="mealQuantity"
-            value={orderData.mealQuantity}
-            onChange={handleInputChange}
+            value={mealQuantity}
+            onChange={(e) => setMealQuantity(e.target.value)}
             aria-label="Enter the number of meals"
             required
           />
@@ -120,7 +110,6 @@ const CustomOrderForm = () => {
         <button type="submit" className="order-submit-btn">Submit Order</button>
       </form>
 
-      {/* Display success or error message */}
       {serverMessage && (
         <div className="success-message">
           <p>{serverMessage}</p>
