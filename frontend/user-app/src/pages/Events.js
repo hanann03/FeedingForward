@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom'; // Import Link for navigation
+import { Link } from 'react-router-dom'; 
 import charityImgOne from '../pages/charityone.jpg';
 import charityImgTwo from '../pages/charitytwp.jpg';
 import charityImgThree from '../pages/charity3.jpg';

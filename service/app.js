@@ -54,6 +54,7 @@ mongoose
     console.log("connection failed");
   });
 
+
 // error handler
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
@@ -66,14 +67,15 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-// app.post('/order', async (req, res) => {
-//   try {
-//       const order = await OrderForm.create(req.body); 
-//       res.status(200).json(order);
-//   } catch (error) {
-//       console.error('Error creating order:', error.message); 
-//       res.status(500).json({ message: error.message });
-//   }
-// });
+app.post('/events', async (req, res) => {
+  try {
+      var event = await Events.create(req.body); 
+      res.status(200).json(order);
+
+  } catch (error) {
+      console.error('Error creating event:', error.message); 
+      res.status(500).json({ message: error.message });
+  }
+});
 
 module.exports = app;

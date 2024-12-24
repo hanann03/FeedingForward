@@ -1,7 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var Order = require("../model/order");
-
+var Event = require("../model/event");
 /* GET home page. */
 router.get("/", function (req, res, next) {
   res.render("index", { title: "Express" });
@@ -26,14 +26,15 @@ router.post("/order", async function (req, res) {
 
 router.post("/events", async function (req, res){
   try{
+console.log('here');
 
     const newEvent = new Event({
       name: req.body.name,
       email: req.body.email,
-      phoneNumber: req.body.phoneNumber,
-      doner:req.body.doner,
+      phone: req.body.phone,
       foodType:req.body.foodType,
       quantity:req.body.quantity,
+      type:req.body.type,
 
     })
     const savedEvent = await newEvent.save();
